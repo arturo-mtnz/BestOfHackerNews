@@ -1,5 +1,6 @@
 ﻿using BestOfHackerNews.Core;
 using BestOfHackerNews.Core.Api;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +22,8 @@ static WebApplicationBuilder GetApplicationBuilder()
 
     webAppBuilder.Services.AddEndpointsApiExplorer();
     webAppBuilder.Services.AddSwaggerGen();
+    webAppBuilder.Services.AddMemoryCache();
+    webAppBuilder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
     return webAppBuilder;
 }

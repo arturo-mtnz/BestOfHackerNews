@@ -22,5 +22,6 @@ internal static class TypeRegistrations
         webAppBuilder.Services.AddSingleton<IApiMapper, ApiMapper>();
         /* Services */
         webAppBuilder.Services.AddSingleton<IHackerNewsService, HackerNewsService>();
+        webAppBuilder.Services.AddSingleton<ICachedHttpClient, CachedHackerNewsHttpClient>();
     }
 }

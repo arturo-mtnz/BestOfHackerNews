@@ -1,8 +1,8 @@
-﻿namespace BestOfHackerNews.Core.Model;
+﻿namespace BestOfHackerNews.Core.Domain;
 
 using System;
 
-internal class Story
+internal class Story : IComparable<Story>
 {
     public string Title { get; set; } = string.Empty;
     public string URI { get; set; } = string.Empty;
@@ -10,4 +10,14 @@ internal class Story
     public DateTime Time { get; set; }
     public int Score { get; set; }
     public int CommentCount { get; set; }
+
+    public int CompareTo(Story? other)
+    {
+        if (other is null)
+        {
+            return -1;
+        }
+
+        return this.Score.CompareTo(other.Score);
+    }
 }

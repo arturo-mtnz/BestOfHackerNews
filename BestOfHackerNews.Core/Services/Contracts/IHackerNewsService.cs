@@ -1,6 +1,6 @@
 ﻿namespace BestOfHackerNews.Core.Services.Contracts;
 
-using BestOfHackerNews.Core.Model;
+using BestOfHackerNews.Core.Domain;
 
 internal interface IHackerNewsService
 {
