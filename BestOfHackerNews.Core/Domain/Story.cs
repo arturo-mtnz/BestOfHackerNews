@@ -18,6 +18,6 @@ internal class Story : IComparable<Story>
             return -1;
         }
 
-        return this.Score.CompareTo(other.Score);
+        return other.Score.CompareTo(this.Score);
     }
 }

@@ -4,5 +4,5 @@ using BestOfHackerNews.Core.Domain;
 
 internal interface IHackerNewsService
 {
-    IList<Story> GetTopStories(int count);
+    Task<IList<Story>> GetTopStories(int count);
 }

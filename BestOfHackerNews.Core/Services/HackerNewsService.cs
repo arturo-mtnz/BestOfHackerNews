@@ -6,12 +6,20 @@ using BestOfHackerNews.Core.Services.Contracts;
 
 internal class HackerNewsService : IHackerNewsService
 {
-    public HackerNewsService(ICachedHttpClient cachedClient)
+    public HackerNewsService(ICachedHackerNewsHttpClient cachedHackerNewsHttpClient)
     {
+        this.CachedHackerNewsHttpClient = cachedHackerNewsHttpClient;
     }
 
-    public IList<Story> GetTopStories(int count)
+    private ICachedHackerNewsHttpClient CachedHackerNewsHttpClient { get; }
+
+    public async Task<IList<Story>> GetTopStories(int count)
     {
-        throw new NotImplementedException();
+        IList<int> storiesIds = await this.CachedHackerNewsHttpClient.GetTopStoriesIds();
+        IEnumerable<Task<Story>> storyTasks = storiesIds.Select(this.CachedHackerNewsHttpClient.GetStory);
+
+        List<Story> stories = (await Task.WhenAll(storyTasks)).ToList();
+        stories.Sort();
+        return stories.Take(count).ToList();
     }
 }

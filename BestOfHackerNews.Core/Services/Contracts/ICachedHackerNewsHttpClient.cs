@@ -3,8 +3,8 @@
 using System.Collections.Generic;
 using BestOfHackerNews.Core.Domain;
 
-internal interface ICachedHttpClient
+internal interface ICachedHackerNewsHttpClient
 {
-    IList<int> GetTopStoriesIds();
-    Story GetStory();
+    Task<IList<int>> GetTopStoriesIds();
+    Task<Story> GetStory(int storyId);
 }
