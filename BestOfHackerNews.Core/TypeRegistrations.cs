@@ -12,16 +12,19 @@ using BestOfHackerNews.Core.Services.Contracts;
 internal static class TypeRegistrations
 {
     /// <summary>
-    /// Registers implementatons of interfaces which need to be used for DI.
+    /// Registers implementations of interfaces which need to be used for DI.
     /// </summary>
     /// <param name="webAppBuilder">The WebApplicationBuilder object where we are registering the implementations</param>
     public static void RegisterCustomServices(WebApplicationBuilder webAppBuilder)
     {
         /*** Registration of implementated interfaces ***/
+
         /* Web API */
         webAppBuilder.Services.AddSingleton<IApiMapper, ApiMapper>();
+
         /* Services */
         webAppBuilder.Services.AddSingleton<IHackerNewsService, HackerNewsService>();
-        webAppBuilder.Services.AddSingleton<ICachedHackerNewsHttpClient, CachedHackerNewsHttpClient>();
+        webAppBuilder.Services.AddSingleton<IHackerNewsRepository, CachedHackerNewsRepository>();
+        webAppBuilder.Services.AddSingleton<IHttpSimpleClient, HttpSimpleClient>();
     }
 }

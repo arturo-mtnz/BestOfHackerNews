@@ -1,11 +1,13 @@
 ﻿namespace BestOfHackerNews.Core;
 
 using System;
-using System.Linq;
 using AutoMapper;
 using BestOfHackerNews.Core.Domain;
 using BestOfHackerNews.Core.Dto;
 
+/// <summary>
+/// Maps Hacker News API DTOs to Domain objects.
+/// </summary>
 internal class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
