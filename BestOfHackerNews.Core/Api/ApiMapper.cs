@@ -1,11 +1,11 @@
 ﻿namespace BestOfHackerNews.Core.Api;
 
-using BestOfHackerNews.Core.Domain;
-using BestOfHackerNews.Core.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using BestOfHackerNews.Core.Domain;
+using BestOfHackerNews.Core.Services.Contracts;
 
 /// <summary>
 /// Maps exposed REST endpoints with their logic.

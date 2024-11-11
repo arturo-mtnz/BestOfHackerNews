@@ -10,12 +10,15 @@ using BestOfHackerNews.Core.Domain;
 using BestOfHackerNews.Core.Dto;
 using BestOfHackerNews.Core.Services;
 using BestOfHackerNews.Core.Services.Contracts;
+using Castle.Core.Logging;
+using Microsoft.Extensions.Logging;
 
 [TestClass]
 public class CachingTests
 {
     private Mock<IMapper> _mapperMock;
     private Mock<IHttpSimpleClient> _httpClientMock;
+    private Mock<ILogger<CachedHackerNewsRepository>> _logger;
     private CachedHackerNewsRepository _repository;
     private MemoryCache _memoryCache;
 
@@ -25,11 +28,13 @@ public class CachingTests
         _memoryCache = new MemoryCache(new MemoryCacheOptions());
         _mapperMock = new Mock<IMapper>();
         _httpClientMock = new Mock<IHttpSimpleClient>();
+        _logger = new Mock<ILogger<CachedHackerNewsRepository>>();
 
         _repository = new CachedHackerNewsRepository(
             _memoryCache,
             _mapperMock.Object,
-            _httpClientMock.Object);
+            _httpClientMock.Object,
+            _logger.Object);
     }
 
     [TestMethod]

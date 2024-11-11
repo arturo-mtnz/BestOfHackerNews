@@ -5,7 +5,7 @@ using System.Text.Json;
 using BestOfHackerNews.Core.Services.Contracts;
 
 /// <summary>
-/// Convenience implementation of IHttpSimpleClient with throttling capabilities to ensure no more than 30 concurrent connections.
+/// Convenience implementation of IHttpSimpleClient with throttling capabilities to ensure no more than a given number of concurrent connections.
 /// </summary>
 internal class HttpThrottledClient : IHttpSimpleClient
 {
