@@ -4,6 +4,7 @@ using BestOfHackerNews.Core.Domain;
 using BestOfHackerNews.Core.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
 /// <summary>
@@ -12,14 +13,17 @@ using Swashbuckle.AspNetCore.Annotations;
 internal class ApiMapper : IApiMapper
 {
     public ApiMapper(
-        IHackerNewsService hackerNewsService
+        IHackerNewsService hackerNewsService,
+        ILogger<ApiMapper> logger
         )
     {
         this.HackerNewsService = hackerNewsService;
+        this.Logger = logger;
     }
 
     private IHackerNewsService HackerNewsService { get; }
 
+    private ILogger Logger { get; }
 
     /// <summary>
     /// Registers the available endpoints
@@ -51,13 +55,13 @@ internal class ApiMapper : IApiMapper
         try
         {
             IList<Story> result = await this.HackerNewsService.GetTopStories(count);
-            Console.WriteLine($"{nameof(ApiMapper)}|{nameof(GetTopStories)}|Got {result.Count} top stories");
+            this.Logger.LogInformation($"{nameof(ApiMapper)}|{nameof(GetTopStories)}|Got {result.Count} top stories");
 
             return Results.Ok(result);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{nameof(ApiMapper)}|{nameof(GetTopStories)}|Error: {ex}");
+            this.Logger.LogError(ex, $"{nameof(ApiMapper)}|{nameof(GetTopStories)}|Error while obtaining the {count} top stories.");
             return Results.Problem("Error while getting top stories from Hacker News API");
         }
     }

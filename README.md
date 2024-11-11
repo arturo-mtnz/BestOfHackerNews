@@ -12,10 +12,11 @@ http://localhost:5000/api/topStories?count=10
 *** MADE ASSUMPTIONS ***
 
 - It is assumed that it is acceptable to cache the results obtained from the Hacker News API to avoid overloading it with requests, even though we get results outdated by some seconds. 
+- It is assumed that a maximum number of concurrent outgoing HTTP requests to Hacker news API should be 50.
 
 
 *** FURTHER POSSIBLE ENHANCEMENTS: ***
 
-- Explicit throttling in HttpClient: it may be convenient to add throttling capabilities to the HttpSimpleClient in order to avoid making more than certain amount of requests per second. Nevertheless, this is mildly accomplished by current design thanks to the caching and the random expiration times for cached stories. 
 - Error handling refinement: it may be convenient to return specific HTTP error codes and messages, depending on the API intended usage.
-- Disabling HttpClient resilience logging in console: after enabling HttpClient standard resilience policy to allow HttpClient retries, a very verbose console logging for HttpCiente requests has also been activated. I noticed this amount of logging penalizes performance but, still, decided to keep it to allow better observability about which HTTP requests are made to the Hacker News API. However, disabling this verbose logging would noticeably improve performance.
+- HttpClient resilience and throttling capabilities are testable. Adding specific tests would be valuable.
+- Minimum severity console logging for Polly and BestOfHackerNews.Core could be increased up to Warning level to improve performance. So far, only System.Net.Http and Microsoft.Extensions.Http.Resilience log origins are filtered to only show Warning or higher log severity.

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using BestOfHackerNews.Core;
 using BestOfHackerNews.Core.Api;
 using BestOfHackerNews.Core.Services.Contracts;
@@ -32,8 +33,15 @@ internal class Program
         webAppBuilder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
         /* HTTP resilience and retries */
-        webAppBuilder.Services.AddHttpClient<IHttpSimpleClient, HttpSimpleClient>()
+        webAppBuilder.Services.AddHttpClient<IHttpSimpleClient, HttpThrottledClient>()
             .AddStandardResilienceHandler();
+
+        /* Console and logging */
+        webAppBuilder.Logging.ClearProviders();
+        webAppBuilder.Logging.AddConsole();
+        webAppBuilder.Logging.SetMinimumLevel(LogLevel.Information);
+        webAppBuilder.Logging.AddFilter("System.Net.Http", LogLevel.Warning);
+        webAppBuilder.Logging.AddFilter("Microsoft.Extensions.Http.Resilience", LogLevel.Warning);
 
         return webAppBuilder;
     }

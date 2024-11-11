@@ -2,6 +2,7 @@
 
 using AutoMapper;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using BestOfHackerNews.Core.Domain;
@@ -13,12 +14,16 @@ using BestOfHackerNews.Core.Services.Contracts;
 /// </summary>
 internal class CachedHackerNewsRepository : IHackerNewsRepository
 {
-    public CachedHackerNewsRepository(IMemoryCache memorycache, IMapper mapper, IHttpSimpleClient httpSimpleClient)
+    public CachedHackerNewsRepository(
+        IMemoryCache memorycache,
+        IMapper mapper,
+        IHttpSimpleClient httpSimpleClient,
+        ILogger<CachedHackerNewsRepository> logger)
     {
         this.MemoryCache = memorycache;
         this.Mapper = mapper;
         this.HttpSimpleClient = httpSimpleClient;
-
+        this.Logger = logger;
         this.PseudoRandomGenerator = new Random();
     }
 
@@ -27,6 +32,8 @@ internal class CachedHackerNewsRepository : IHackerNewsRepository
     private IMapper Mapper { get; }
 
     private IHttpSimpleClient HttpSimpleClient { get; }
+
+    private ILogger<CachedHackerNewsRepository> Logger { get; }
 
     private Random PseudoRandomGenerator { get; }
 
@@ -39,6 +46,7 @@ internal class CachedHackerNewsRepository : IHackerNewsRepository
         bool cached = this.MemoryCache.TryGetValue(cacheKey, out topStoriesIds);
         if (cached && topStoriesIds is not null)
         {
+            this.Logger.LogInformation($"{nameof(CachedHackerNewsRepository)}|{nameof(GetTopStoriesIds)}|Retrieving top stories ids from cache.");
             return topStoriesIds;
         }
 
@@ -59,6 +67,7 @@ internal class CachedHackerNewsRepository : IHackerNewsRepository
         bool cached = this.MemoryCache.TryGetValue(cacheKey, out story);
         if (cached && story is not null)
         {
+            this.Logger.LogInformation($"{nameof(CachedHackerNewsRepository)}|{nameof(GetTopStoriesIds)}|Retrieving story {storyId} from cache.");
             return story;
         }
 
