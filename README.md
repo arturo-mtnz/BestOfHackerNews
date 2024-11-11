@@ -4,7 +4,7 @@ The application can be compiled and run from Visual Studio. Startup project shou
 
 http://localhost:5000/swagger/index.html
 
-From there, the /api/topStories endpoint can be invoked with HTTP GET. The endpoint can also be directly called from a web browser. For example, for obtaining the top 10 stories:
+From there, the HTTP GET /api/topStories endpoint can be invoked with the required count parameter. The endpoint can also be directly accessed from a web browser. For example, for obtaining the top 10 stories:
 
 http://localhost:5000/api/topStories?count=10
 
